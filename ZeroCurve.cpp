@@ -4,8 +4,8 @@ int main(){
     double ZeroRate[5];
     double Yield[5];
     double C;
-    printf("輸入債券每期複習C")
-    scanf("%lf",&C)
+    printf("輸入債券每期複習C");
+    scanf("%lf",&C);
 
     for(int i=0;i<5;i=i++){
         printf("輸入 i-th 期殖利率 %d :",i=1);
@@ -26,6 +26,20 @@ int main(){
             }
         }
         //Step(b)
-        
+        double sumPV = 0;
+        for(int j=0;j<i;j++){
+            double PV=C;
+            for(int k=0;k<=j;k++){
+                PV=PV/(1+ZeroRate[i]);
+            }
+            sumPV = sumPV+PV;
+        }   
+        //Step(c)&(d)
+        ZeroRate[i]=pow((C+100)/(BondValue-sumPV),1.0/(i+1))-1;
     }
+    for(int i=0;i<=4;i++){
+        printf("第 %d 期的零息利率 = %lf",i,ZeroRate[i]);
+    }
+    return 0;
+    
 }
