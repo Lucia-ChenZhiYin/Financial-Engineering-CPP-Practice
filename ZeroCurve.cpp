@@ -4,7 +4,7 @@ int main(){
     double ZeroRate[5];
     double Yield[5];
     double C;
-    printf("輸入債券每期複習C");
+    printf("輸入債券每期複習C :");
     scanf("%lf",&C);
 
     for(int i=0;i<5;i++){
