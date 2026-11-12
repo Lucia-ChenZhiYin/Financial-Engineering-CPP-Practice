@@ -31,6 +31,5 @@ int main(){
         rk=rk-(f_r/df_r);
     }
     printf("IRR_Newton=%lf\n",rk);
-    printf("Iterations=%d\n",count);
     return 0;
 }
