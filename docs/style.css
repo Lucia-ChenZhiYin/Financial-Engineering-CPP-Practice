@@ -89,3 +89,50 @@ footer {
     color: #999;
     font-size: 13px;
 }
+
+
+/* Practice Detail Page */
+
+.detail {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+}
+
+.detail h2 {
+    font-size: 21px;
+    margin-bottom: 15px;
+}
+
+.detail p,
+.detail li {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.detail ul {
+    padding-left: 25px;
+}
+
+pre {
+    background-color: #252a34;
+    color: #e6e6e6;
+    padding: 25px;
+    border-radius: 10px;
+    overflow-x: auto;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+pre code {
+    font-family: Consolas, monospace;
+}
+
+main > a {
+    display: inline-block;
+    color: #557b9c;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
