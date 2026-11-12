@@ -2,7 +2,8 @@
 #include<math.h>
 int main(){
     int N;
-    double C,BondPV=0,Discount,f_r,X,rk,df_r,initialr=0.01;
+    double C,Discount,f_r,X,rk,df_r;
+    double BondPV=0,initialr=0.01;
     printf("put C :");
     scanf("%lf",&C);
     printf("put $X :");
