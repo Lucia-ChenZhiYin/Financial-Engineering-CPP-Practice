@@ -91,7 +91,8 @@ int main(){
     printf("IRR_Bisection=%8.4f",High);
 
     return 0;
-}</code></pre>
+}
+            </code></pre>
 
         </section>
 
@@ -111,110 +112,6 @@ int main(){
 
     <footer>
         <p>Learning by doing, Financial Engineering</p>
-    </footer> <header>
-        <h1>Financial Engineering</h1>
-        <p>Programming Practice & Study Notes</p>
-    </header>
-
-    <main>
-
-        <a href="../index.html">← Back to Practice</a>
-
-        <section class="intro">
-            <h2>Bisection Method</h2>
-            <p>二分法｜Bond Internal Rate of Return</p>
-        </section>
-
-        <section class="detail">
-            <h2>01. Overview</h2>
-            <p>
-                本次練習使用二分法（Bisection Method）
-                求解債券的內部報酬率（Internal Rate of Return, IRR）。
-                透過不斷縮小搜尋區間，逐步逼近使債券現值等於市場價格的利率。
-            </p>
-        </section>
-
-        <section class="detail">
-            <h2>02. Input Variables</h2>
-
-            <ul>
-                <li><strong>C：</strong>每期票面利息（Coupon Payment）</li>
-                <li><strong>X：</strong>債券市場價格（Bond Price）</li>
-                <li><strong>N：</strong>剩餘期數（Number of Periods）</li>
-                <li><strong>Low / High：</strong>搜尋利率的上下界</li>
-                <li><strong>middle：</strong>目前搜尋區間的中點</li>
-            </ul>
-        </section>
-
-        <section class="detail">
-            <h2>03. Source Code</h2>
-
-            <pre><code>#include &lt;stdio.h&gt;
-
-int main(){
-    float C,X,Discount,f_r;
-    float Low=0,High=1;
-    int N;
-
-    printf("$C:");
-    scanf("%f",&amp;C);
-
-    printf("$X:");
-    scanf("%f",&amp;X);
-
-    printf("N-th:");
-    scanf("%d",&amp;N);
-
-    while (High-Low&gt;=0.0001){
-        float middle=(High+Low)/2,BondPV=0;
-
-        for(int i=1;i&lt;=N;i++){
-            Discount=1;
-
-            for(int j=1;j&lt;=i;j++){
-                Discount=Discount/(1+middle);
-            }
-
-            BondPV=BondPV+Discount*C;
-
-            if(i==N){
-                BondPV=BondPV+Discount*100;
-            }
-        }
-
-        f_r=BondPV-X;
-
-        if(f_r&gt;0){
-            Low=middle;
-        }
-        else{
-            High=middle;
-        }
-    }
-
-    printf("IRR_Bisection=%8.4f",High);
-
-    return 0;
-}</code></pre>
-
-        </section>
-
-        <section class="detail">
-            <h2>04. Learning Notes</h2>
-            <p>
-                這次練習主要熟悉二分搜尋法的應用，
-                並透過巢狀 for 迴圈計算債券各期現金流的折現價值。
-                利用 while 迴圈持續縮小利率區間，
-                直到搜尋精度達到設定條件。
-            </p>
-        </section>
-
-        <a href="../index.html">← Back to Practice</a>
-
-    </main>
-
-    <footer>
-        <p>Learning by doing, Financial Engineering</p>
-    </footer>
+    </footer> 
 </body>
 </html>
