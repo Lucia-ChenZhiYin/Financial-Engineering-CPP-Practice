@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrapping | Financial Engineering</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Financial Engineering</h1>
+        <p>Programming Practice & Study Notes</p>
+    </header>
+
+    <main>
+
+        <a href="../index.html">← Back to Practice</a>
+
+        <section class="intro">
+            <h2>Bootstrapping Method</h2>
+            <p>拔靴法｜Zero-Coupon Yield Curve Construction</p>
+        </section>
+
+        <section class="detail">
+            <h2>01. Overview</h2>
+
+            <p>
+                本次練習使用拔靴法（Bootstrapping Method）
+                建構零息利率曲線（Zero-Coupon Yield Curve）。
+                透過已知的債券殖利率與票面利息，
+                逐期推導不同到期期限所對應的零息利率。
+            </p>
+
+            <p>
+                拔靴法的核心概念是利用已經求得的短期零息利率，
+                進一步計算較長期的零息利率，
+                逐步完成整條利率曲線。
+            </p>
+        </section>
+
+        <section class="detail">
+            <h2>02. Mathematical Concept</h2>
+
+            <p>
+                零息利率（Zero Rate）代表特定到期期限下，
+                單一未來現金流所適用的折現利率。
+            </p>
+
+            <p><strong>Bond Pricing Concept</strong></p>
+
+            <pre><code>Bond Value = PV(Coupon Payments) + PV(Principal)</code></pre>
+
+            <p>
+                拔靴法利用已知的債券價格與殖利率，
+                先計算債券現值，再扣除已知期間的票息現值，
+                推導尚未求出的零息利率。
+            </p>
+
+            <p><strong>Zero Rate Calculation</strong></p>
+
+            <pre><code>ZeroRate[i] = pow(
+    (C + 100) / (BondValue - sumPV),
+    1.0 / (i + 1)
+) - 1;</code></pre>
+
+            <p>
+                其中 BondValue 為債券現值，
+                sumPV 為已知期間票息的折現現值，
+                剩餘部分則用來推導目前到期期限的零息利率。
+            </p>
+        </section>
+
+        <section class="detail">
+            <h2>03. Input Variables</h2>
+
+            <ul>
+                <li><strong>C：</strong>每期票面利息（Coupon Payment）</li>
+                <li><strong>Yield：</strong>各期債券殖利率</li>
+                <li><strong>ZeroRate：</strong>各期零息利率</li>
+                <li><strong>BondValue：</strong>依殖利率計算的債券現值</li>
+                <li><strong>Discount：</strong>折現因子（Discount Factor）</li>
+                <li><strong>sumPV：</strong>已知票息的折現現值總和</li>
+                <li><strong>PV：</strong>單期票息的折現現值</li>
+                <li><strong>i、j、k：</strong>用於控制不同期數的迴圈變數</li>
+            </ul>
+        </section>
+
+        <section class="detail">
+            <h2>04. Calculation Process</h2>
+
+            <p><strong>Step 1. Initialize</strong></p>
+            <p>
+                輸入每期票面利息及五期殖利率，
+                並將第一期零息利率設定為第一期殖利率。
+            </p>
+
+            <pre><code>ZeroRate[0] = Yield[0];</code></pre>
+
+            <p><strong>Step 2. Calculate Bond Value</strong></p>
+            <p>
+                利用各期殖利率計算債券現值，
+                包含每期票息與最後一期的本金。
+            </p>
+
+            <p><strong>Step 3. Calculate Known Present Value</strong></p>
+            <p>
+                計算前面已知期間的票息現值，
+                作為推導下一期零息利率的基礎。
+            </p>
+
+            <p><strong>Step 4. Calculate Zero Rate</strong></p>
+            <p>
+                利用債券現值扣除已知票息現值，
+                推導目前期限的零息利率。
+            </p>
+
+            <p><strong>Step 5. Repeat</strong></p>
+            <p>
+                重複以上步驟，直到完成五期零息利率的計算。
+            </p>
+        </section>
+
+        <section class="detail">
+            <h2>05. Source Code</h2>
+
+            <pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main(){
+    double ZeroRate[5];
+    double Yield[5];
+    double C;
+
+    printf("輸入債券每期複習C:");
+    scanf("%lf",&amp;C);
+
+    for(int i=0;i&lt;5;i++){
+        printf("輸入 i-th 期殖利率 %d :",i+1);
+        scanf("%lf",&amp;Yield[i]);
+    }
+
+    ZeroRate[0]=Yield[0];
+
+    for(int i=1;i&lt;=4;i++){
+
+        // Step(a)
+        double BondValue=0;
+
+        for(int j=0;j&lt;=i;j++){
+            double Discount=1;
+
+            for(int k=0;k&lt;=j;k++){
+                Discount=Discount/(1+Yield[i]);
+            }
+
+            BondValue=BondValue+Discount*C;
+
+            if(j==i){
+                BondValue=BondValue+Discount*100;
+            }
+        }
+
+        // Step(b)
+        double sumPV = 0;
+
+        for(int j=0;j&lt;i;j++){
+            double PV=C;
+
+            for(int k=0;k&lt;=j;k++){
+                PV=PV/(1+ZeroRate[i]);
+            }
+
+            sumPV = sumPV+PV;
+        }
+
+        // Step(c)&amp;(d)
+        ZeroRate[i]=pow(
+            (C+100)/(BondValue-sumPV),
+            1.0/(i+1)
+        )-1;
+    }
+
+    for(int i=0;i&lt;=4;i++){
+        printf("第 %d 期的零息利率 = %lf",i,ZeroRate[i]);
+    }
+
+    return 0;
+}</code></pre>
+        </section>
+
+        <section class="detail">
+            <h2>06. Learning Notes</h2>
+
+            <p>
+                本次練習透過巢狀 for 迴圈計算不同期間的債券現值，
+                並使用陣列保存逐期推導的零息利率。
+            </p>
+
+            <p>
+                與二分法及牛頓法不同，
+                拔靴法主要應用於零息利率曲線的建構，
+                需要依照到期期限逐步計算，
+                並利用前面已知的利率資訊推導後續期限。
+            </p>
+
+            <p>
+                透過這次練習，可以進一步理解債券定價、
+                現金流折現以及零息利率之間的關係。
+            </p>
+        </section>
+
+        <a href="../index.html">← Back to Practice</a>
+
+    </main>
+
+    <footer>
+        <p>Learning by doing, Financial Engineering</p>
+    </footer>
+
+</body>
+</html>
