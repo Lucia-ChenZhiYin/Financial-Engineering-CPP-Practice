@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton-Raphson | Financial Engineering</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Financial Engineering</h1>
+        <p>Programming Practice & Study Notes</p>
+    </header>
+
+    <main>
+
+        <a href="../index.html">← Back to Practice</a>
+
+        <section class="intro">
+            <h2>Newton-Raphson Method</h2>
+            <p>牛頓法｜Bond Internal Rate of Return</p>
+        </section>
+
+        <section class="detail">
+            <h2>01. Overview</h2>
+
+            <p>
+                本次練習使用牛頓法（Newton-Raphson Method）
+                求解債券的內部報酬率（Internal Rate of Return, IRR）。
+                透過函數值與導數，反覆修正利率估計值，
+                直到計算結果達到設定的收斂精度。
+            </p>
+        </section>
+
+        <section class="detail">
+            <h2>02. Mathematical Concept</h2>
+
+            <p>
+                牛頓法是一種利用函數導數尋找方程式根的方法。
+                其基本迭代公式如下：
+            </p>
+
+            <p>
+                <strong>Newton-Raphson Formula</strong>
+            </p>
+
+            <pre><code>r(k+1) = r(k) - f(r(k)) / f'(r(k))</code></pre>
+
+            <p>
+                在本次債券 IRR 問題中：
+            </p>
+
+            <ul>
+                <li>f(r) = BondPV - X</li>
+                <li>BondPV：債券現金流折現後的總現值</li>
+                <li>X：債券市場價格</li>
+                <li>f'(r)：債券現值函數對利率的導數</li>
+                <li>r(k)：第 k 次迭代的利率估計值</li>
+            </ul>
+
+            <p>
+                透過不斷更新利率估計值，使 f(r) 逐漸接近 0。
+            </p>
+        </section>
+
+        <section class="detail">
+            <h2>03. Input Variables</h2>
+
+            <ul>
+                <li><strong>C：</strong>每期票面利息（Coupon Payment）</li>
+                <li><strong>X：</strong>債券市場價格（Bond Price）</li>
+                <li><strong>N：</strong>剩餘期數（Number of Periods）</li>
+                <li><strong>rk：</strong>目前的利率估計值</li>
+                <li><strong>BondPV：</strong>債券現值</li>
+                <li><strong>f_r：</strong>現值與市場價格的差額</li>
+                <li><strong>df_r：</strong>現值函數對利率的導數</li>
+                <li><strong>initialr：</strong>初始利率估計值</li>
+            </ul>
+        </section>
+
+        <section class="detail">
+            <h2>04. Source Code</h2>
+
+            <pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main(){
+    int N;
+    double C,Discount,f_r,X,rk,df_r;
+    double BondPV=0,initialr=0.01;
+
+    printf("put C :");
+    scanf("%lf",&amp;C);
+
+    printf("put $X :");
+    scanf("%lf",&amp;X);
+
+    printf("put N-th:");
+    scanf("%d",&amp;N);
+
+    f_r=1;
+    rk=initialr;
+
+    while (fabs(f_r)&gt;=0.001){
+        BondPV=0;
+        df_r=0;
+
+        for(int i=1;i&lt;=N;i++){
+            Discount=1;
+
+            for(int j=1;j&lt;=i;j++){
+                Discount=Discount/(1+rk);
+            }
+
+            BondPV=BondPV+Discount*C;
+            df_r=df_r-(Discount/(1+rk))*i*C;
+
+            if(i==N){
+                BondPV=BondPV+Discount*100;
+                df_r=df_r-(Discount/(1+rk))*N*100;
+            }
+        }
+
+        f_r=BondPV-X;
+        rk=rk-(f_r/df_r);
+    }
+
+    printf("IRR_Newton=%lf\n",rk);
+
+    return 0;
+}</code></pre>
+
+        </section>
+
+        <section class="detail">
+            <h2>05. Learning Notes</h2>
+
+            <p>
+                本次練習使用牛頓法求解債券內部報酬率，
+                透過 BondPV 計算債券現值，
+                並利用 df_r 計算現值函數的導數。
+            </p>
+
+            <p>
+                與二分法相比，牛頓法不需要持續縮小搜尋區間，
+                而是利用導數修正目前的利率估計值。
+                因此初始估計值與導數計算會影響迭代結果。
+            </p>
+        </section>
+
+        <a href="../index.html">← Back to Practice</a>
+
+    </main>
+
+    <footer>
+        <p>Learning by doing, Financial Engineering</p>
+    </footer>
+
+</body>
+</html>
