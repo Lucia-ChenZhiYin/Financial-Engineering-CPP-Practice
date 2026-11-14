@@ -2,25 +2,34 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Bisection Method | Financial Engineering</title>
+
+    <!-- 引入共用 CSS，讓所有練習頁面維持一致的風格 -->
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-     <header>
+
+    <!-- 網站上方標題 -->
+    <header>
         <h1>Financial Engineering</h1>
         <p>Programming Practice & Study Notes</p>
     </header>
 
     <main>
 
+        <!-- 返回練習首頁 -->
         <a href="../index.html">← Back to Practice</a>
 
+        <!-- 頁面主標題 -->
         <section class="intro">
             <h2>Bisection Method</h2>
             <p>二分法｜Bond Internal Rate of Return</p>
         </section>
 
+        <!-- 01. 程式用途介紹 -->
         <section class="detail">
             <h2>01. Overview</h2>
             <p>
@@ -30,6 +39,7 @@
             </p>
         </section>
 
+        <!-- 02. 程式中使用的重要變數 -->
         <section class="detail">
             <h2>02. Input Variables</h2>
 
@@ -42,10 +52,13 @@
             </ul>
         </section>
 
+        <!-- 03. C++ 原始程式碼 -->
         <section class="detail">
             <h2>03. Source Code</h2>
 
-            <pre><code>#include &lt;stdio.h&gt;
+            <!-- 使用 pre 和 code 保留程式碼的縮排與格式 -->
+            <pre><code>
+#include &lt;stdio.h&gt;
 
 int main(){
     float C,X,Discount,f_r;
@@ -91,27 +104,29 @@ int main(){
     printf("IRR_Bisection=%8.4f",High);
 
     return 0;
-}
-            </code></pre>
-
+}</code></pre>
         </section>
 
+        <!-- 04. 簡短學習摘要；完整筆記另外儲存在 Notes 資料夾 -->
         <section class="detail">
             <h2>04. Learning Notes</h2>
             <p>
-                這次練習主要熟悉二分搜尋法的應用，
+                本次練習主要熟悉二分搜尋法的應用，
                 並透過巢狀 for 迴圈計算債券各期現金流的折現價值。
                 利用 while 迴圈持續縮小利率區間，
                 直到搜尋精度達到設定條件。
             </p>
         </section>
 
+        <!-- 頁面底部返回連結 -->
         <a href="../index.html">← Back to Practice</a>
 
     </main>
 
+    <!-- 網站頁尾 -->
     <footer>
         <p>Learning by doing, Financial Engineering</p>
-    </footer> 
+    </footer>
+
 </body>
 </html>
