@@ -192,9 +192,45 @@ pre code {
     font-family: Consolas, "Courier New", monospace;
 }
 
+/* =========================================
+   08. Markdown Notes
+========================================= */
+
+/* 筆記標題 */
+#notes-content h1,
+#notes-content h2,
+#notes-content h3 {
+    margin: 20px 0 10px;
+}
+
+/* 筆記段落 */
+#notes-content p {
+    margin-bottom: 12px;
+    color: #666666;
+}
+
+/* 筆記清單 */
+#notes-content ul,
+#notes-content ol {
+    padding-left: 25px;
+    margin-bottom: 15px;
+}
+
+/* 筆記中的程式碼 */
+#notes-content pre {
+    margin: 15px 0;
+}
+
+/* 筆記中的引用 */
+#notes-content blockquote {
+    border-left: 3px solid var(--accent-color);
+    padding-left: 15px;
+    color: var(--subtext-color);
+    margin: 15px 0;
+}
 
 /* =========================================
-   08. Navigation Links
+   09. Navigation Links
 ========================================= */
 
 main > a {
@@ -212,7 +248,7 @@ main > a:hover {
 
 
 /* =========================================
-   09. Responsive Design
+   10. Responsive Design
 ========================================= */
 
 @media (max-width: 768px) {
