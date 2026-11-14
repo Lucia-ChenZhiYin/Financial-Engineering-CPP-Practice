@@ -107,16 +107,62 @@ int main(){
 }</code></pre>
         </section>
 
-        <!-- 04. 簡短學習摘要；完整筆記另外儲存在 Notes 資料夾 -->
+        
+       
+        <!-- 04. Learning Notes -->
         <section class="detail">
             <h2>04. Learning Notes</h2>
+
+            <!-- JavaScript 會將 Markdown 筆記放進這個區域 -->
+            <div
+                id="notes-content"
+                data-markdown="../notes/Bisection_Notes.md">
+                Loading notes...
+            </div>
+        </section>
+
+
+        <!-- 05. Algorithm Steps -->
+        <section class="detail">
+            <h2>05. Algorithm Steps</h2>
+
+            <ul>
+                <li><strong>Step 1：</strong>設定搜尋範圍 Low = 0、High = 1。</li>
+                <li><strong>Step 2：</strong>計算中間值 middle = (Low + High) / 2。</li>
+                <li><strong>Step 3：</strong>利用 middle 計算債券現值 BondPV。</li>
+                <li><strong>Step 4：</strong>比較 BondPV 與市場價格 X。</li>
+                <li><strong>Step 5：</strong>依照差異調整 Low 或 High。</li>
+                <li><strong>Step 6：</strong>重複以上步驟，直到搜尋範圍足夠小。</li>
+            </ul>
+
+            <p>
+                判斷方式：
+            </p>
+
+            <ul>
+                <li>f_r &gt; 0：現值太高，提高利率，Low = middle。</li>
+                <li>f_r &lt; 0：現值太低，降低利率，High = middle。</li>
+            </ul>
+        </section>
+
+        <!-- 06. Learning Notes -->
+        <section class="detail">
+            <h2>06. Learning Notes</h2>
+
             <p>
                 本次練習主要熟悉二分搜尋法的應用，
                 並透過巢狀 for 迴圈計算債券各期現金流的折現價值。
                 利用 while 迴圈持續縮小利率區間，
                 直到搜尋精度達到設定條件。
             </p>
+
+            <p>
+                我目前能理解透過不斷縮小搜尋範圍來逼近答案的過程，
+                但對於如何從數學關係推導出程式中的判斷條件，
+                還需要持續練習與理解。
+            </p>
         </section>
+
 
         <!-- 頁面底部返回連結 -->
         <a href="../index.html">← Back to Practice</a>
@@ -128,5 +174,10 @@ int main(){
         <p>Learning by doing, Financial Engineering</p>
     </footer>
 
+    <!-- 引入 Markdown 轉換工具 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+
+    <!-- 引入自己的 JavaScript -->
+    <script src="../main.js"></script>
 </body>
 </html>
