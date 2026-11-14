@@ -17,8 +17,6 @@ fetch(markdownPath)
     .then(markdown => {
         // 將 Markdown 轉換成 HTML，放進網頁
         notesContainer.innerHTML = marked.parse(markdown);
-        // 將 Markdown 中的數學公式轉換成數學排版
-        MathJax.typesetPromise([notesContainer]);
     })
     .catch(error => {
         // 如果讀取失敗，顯示錯誤訊息
