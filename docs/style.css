@@ -229,6 +229,32 @@ pre code {
     margin: 15px 0;
 }
 
+/* Markdown 表格 */
+#notes-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    table-layout: fixed;
+}
+
+#notes-content th,
+#notes-content td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+#notes-content th {
+    background-color: #f1f4f7;
+    font-weight: 600;
+}
+
+#notes-content td:first-child,
+#notes-content th:first-child {
+    width: 25%;
+}
 /* =========================================
    09. Navigation Links
 ========================================= */
