@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forward Rate | Financial Engineering</title>
+
+    <!-- 引入共用 CSS -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- 網站標題 -->
+    <header>
+        <h1>Financial Engineering</h1>
+        <p>Programming Practice & Study Notes</p>
+    </header>
+
+    <main>
+
+        <!-- 返回首頁 -->
+        <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <!-- 練習介紹 -->
+        <section class="intro">
+            <h2>04. Forward Rate Calculation</h2>
+            <p>遠期利率計算</p>
+            <p>
+                利用不同到期期間的零息利率（Zero Rates），
+                根據無套利原則推算不同期間之間的遠期利率（Forward Rates）。
+            </p>
+        </section>
+
+        <!-- 01. Overview -->
+        <section class="detail">
+            <h2>01. Overview</h2>
+            <p>
+                Forward Rate 是指兩個未來期間之間隱含的利率。
+                本程式利用已知的年化零息利率，
+                透過複利累積因子之間的關係，
+                計算不同起始期間與結束期間的遠期利率。
+            </p>
+            <p>
+                本題設定總期間為四年，每半年為一期，
+                因此共有八期，並使用半年複利進行計算。
+            </p>
+        </section>
+
+        <!-- 02. Input Variables -->
+        <section class="detail">
+            <h2>02. Input Variables</h2>
+            <ul>
+                <li><strong>ZeroRate[8]</strong>：儲存八期的年化零息利率。</li>
+                <li><strong>Forward[9][9]</strong>：儲存不同期間組合的遠期利率。</li>
+                <li><strong>a</strong>：遠期利率的起始期間。</li>
+                <li><strong>b</strong>：遠期利率的結束期間。</li>
+                <li><strong>Forward[0][b]</strong>：儲存第 b 期的 Zero Rate。</li>
+                <li><strong>pow()</strong>：計算次方，用於複利累積因子的計算。</li>
+            </ul>
+        </section>
+
+        <!-- 03. Source Code -->
+        <section class="detail">
+            <h2>03. Source Code</h2>
+            <pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main()
+{
+    double ZeroRate[8]; //Zero Rate 數量
+    double Forward[9][9];//有八期
+
+    for(int i=0;i&lt;8;i=i+1)  //Input zero rates
+    {
+        printf("Input the %d-th zero rate:",i+1);
+        scanf("%lf",&amp;ZeroRate[i]);
+    }
+
+    for(int i=0;i&lt;8;i=i+1)
+    {
+        Forward[0][i+1]=ZeroRate[i];
+    }
+
+    for(int i=0;i&lt;=8;i=i+1)
+    {
+        Forward[i][i]=0;
+    }
+
+    for(int a=1;a&lt;8;a=a+1) //Find forward rates
+    {
+        for(int b=a+1;b&lt;=8;b=b+1)
+        {
+            Forward[a][b]=2*(pow(
+                pow(1+Forward[0][b]/2,b)
+                /pow(1+Forward[0][a]/2,a),
+                1.0/(b-a))-1);
+        }
+    }
+
+    printf("f(0,1)=%.4lf\n",ZeroRate[0]*100);
+
+    for(int i=1;i&lt;8;i=i+1) //Output the forward rates
+    {
+        printf("f(%d,%d)=%lf\n",i,i+1,Forward[i][i+1]*100);
+    }
+
+    return 0;
+}</code></pre>
+        </section>
+
+        <!-- 04. Learning Notes -->
+        <section class="detail">
+            <h2>04. Learning Notes</h2>
+
+            <div
+                id="notes-content"
+                data-markdown="../notes/ForwardRate_Notes.md">
+                Loading notes...
+            </div>
+        </section>
+
+        <!-- 返回首頁 -->
+        <a href="../index.html" class="back-link">← Back to Home</a>
+
+    </main>
+
+    <footer>
+        <p>Learning by doing, Financial Engineering</p>
+    </footer>
+
+    <!-- 載入 Markdown 與共用 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="../main.js"></script>
+
+</body>
+</html>
