@@ -3,7 +3,7 @@
 int main(){
     double ZeroRate[8],Forward[9][9];
     for(int i=0;i<8;i++){
-        printf("輸入第%d期零息利率:",i+1);
+        printf("Input the %d-th zero rate:",i+1);
         scanf("%lf",&ZeroRate[i]);
     }
     for(int i=0;i<8;i++){
